@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 
 class ConversationManager {
-  MethodChannel _channel;
+  final MethodChannel _channel;
   late OnConversationListener listener;
 
   ConversationManager(this._channel);
@@ -15,14 +15,21 @@ class ConversationManager {
     return _channel.invokeMethod('setConversationListener', _buildParam({}));
   }
 
-  /// Get All Conversations
-  Future<List<ConversationInfo>> getAllConversationList({String? operationID}) => _channel
-      .invokeMethod(
-          'getAllConversationList',
-          _buildParam({
-            "operationID": Utils.checkOperationID(operationID),
-          }))
-      .then((value) => Utils.toList(value, (map) => ConversationInfo.fromJson(map)));
+  /// 获取所有会话
+  Future<List<ConversationInfo>> getAllConversationList({
+    String? operationID,
+  }) =>
+      _channel
+          .invokeMethod(
+            'getAllConversationList',
+            _buildParam({
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => ConversationInfo.fromJson(map)),
+          );
 
   /// Paginate Through Conversations
   /// [offset] Starting index
@@ -34,13 +41,17 @@ class ConversationManager {
   }) =>
       _channel
           .invokeMethod(
-              'getConversationListSplit',
-              _buildParam({
-                'offset': offset,
-                'count': count,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toList(value, (map) => ConversationInfo.fromJson(map)));
+            'getConversationListSplit',
+            _buildParam({
+              'offset': offset,
+              'count': count,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => ConversationInfo.fromJson(map)),
+          );
 
   /// Query a Conversation; if it doesn't exist, it will be created
   /// [sourceID] UserID for one-on-one conversation, GroupID for group conversation
@@ -52,13 +63,17 @@ class ConversationManager {
   }) =>
       _channel
           .invokeMethod(
-              'getOneConversation',
-              _buildParam({
-                "sourceID": sourceID,
-                "sessionType": sessionType,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toObj(value, (map) => ConversationInfo.fromJson(map)));
+            'getOneConversation',
+            _buildParam({
+              "sourceID": sourceID,
+              "sessionType": sessionType,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toObj(value, (map) => ConversationInfo.fromJson(map)),
+          );
 
   /// Get Multiple Conversations by Conversation ID
   /// [conversationIDList] List of conversation IDs
@@ -68,12 +83,16 @@ class ConversationManager {
   }) =>
       _channel
           .invokeMethod(
-              'getMultipleConversation',
-              _buildParam({
-                "conversationIDList": conversationIDList,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toList(value, (map) => ConversationInfo.fromJson(map)));
+            'getMultipleConversation',
+            _buildParam({
+              "conversationIDList": conversationIDList,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => ConversationInfo.fromJson(map)),
+          );
 
   /// Set Conversation Draft
   /// [conversationID] Conversation ID
@@ -84,12 +103,13 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setConversationDraft',
-          _buildParam({
-            "conversationID": conversationID,
-            "draftText": draftText,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setConversationDraft',
+        _buildParam({
+          "conversationID": conversationID,
+          "draftText": draftText,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Pin a Conversation
   /// [conversationID] Conversation ID
@@ -100,12 +120,13 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'pinConversation',
-          _buildParam({
-            "conversationID": conversationID,
-            "isPinned": isPinned,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'pinConversation',
+        _buildParam({
+          "conversationID": conversationID,
+          "isPinned": isPinned,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Hide a Conversation
   /// [conversationID] Conversation ID
@@ -114,11 +135,12 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'hideConversation',
-          _buildParam({
-            "conversationID": conversationID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'hideConversation',
+        _buildParam({
+          "conversationID": conversationID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Hide All Conversations
   Future hideAllConversations({
@@ -153,10 +175,11 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'getTotalUnreadMsgCount',
-          _buildParam({
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'getTotalUnreadMsgCount',
+        _buildParam({
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Message Do-Not-Disturb Setting
   /// [conversationID] Conversation ID
@@ -167,12 +190,13 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setConversationRecvMessageOpt',
-          _buildParam({
-            "conversationID": conversationID,
-            "status": status,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setConversationRecvMessageOpt',
+        _buildParam({
+          "conversationID": conversationID,
+          "status": status,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Query Do-Not-Disturb Status
   /// [conversationIDList] List of conversation IDs
@@ -183,11 +207,12 @@ class ConversationManager {
   }) =>
       _channel
           .invokeMethod(
-              'getConversationRecvMessageOpt',
-              _buildParam({
-                "conversationIDList": conversationIDList,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'getConversationRecvMessageOpt',
+            _buildParam({
+              "conversationIDList": conversationIDList,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toListMap(value));
 
   /// Self-Destruct Messages
@@ -199,12 +224,13 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setConversationPrivateChat',
-          _buildParam({
-            "conversationID": conversationID,
-            "isPrivate": isPrivate,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setConversationPrivateChat',
+        _buildParam({
+          "conversationID": conversationID,
+          "isPrivate": isPrivate,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Delete a Conversation Locally and from the Server
   /// [conversationID] Conversation ID
@@ -213,11 +239,12 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'deleteConversationAndDeleteAllMsg',
-          _buildParam({
-            "conversationID": conversationID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'deleteConversationAndDeleteAllMsg',
+        _buildParam({
+          "conversationID": conversationID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Clear Messages in a Conversation
   /// [conversationID] Conversation ID
@@ -226,11 +253,12 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'clearConversationAndDeleteAllMsg',
-          _buildParam({
-            "conversationID": conversationID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'clearConversationAndDeleteAllMsg',
+        _buildParam({
+          "conversationID": conversationID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Delete All Local Conversations
   @Deprecated('use hideAllConversations instead')
@@ -238,10 +266,11 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'deleteAllConversationFromLocal',
-          _buildParam({
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'deleteAllConversationFromLocal',
+        _buildParam({
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Reset Mentioned (Group At) Flags [GroupAtType]
   /// [conversationID] Conversation ID
@@ -250,21 +279,23 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'resetConversationGroupAtType',
-          _buildParam({
-            "conversationID": conversationID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'resetConversationGroupAtType',
+        _buildParam({
+          "conversationID": conversationID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Query @ All Flag
   Future<dynamic> getAtAllTag({
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'getAtAllTag',
-          _buildParam({
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'getAtAllTag',
+        _buildParam({
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Get @ All Tag
   String get atAllTag => 'AtAllTag';
@@ -276,11 +307,12 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setGlobalRecvMessageOpt',
-          _buildParam({
-            "status": status,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setGlobalRecvMessageOpt',
+        _buildParam({
+          "status": status,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Set Self-Destruct Message Duration
   /// [conversationID] Conversation ID
@@ -291,12 +323,13 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setConversationBurnDuration',
-          _buildParam({
-            "conversationID": conversationID,
-            "burnDuration": burnDuration,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setConversationBurnDuration',
+        _buildParam({
+          "conversationID": conversationID,
+          "burnDuration": burnDuration,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Mark Messages as Read
   /// [conversationID] Conversation ID
@@ -305,11 +338,12 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'markConversationMessageAsRead',
-          _buildParam({
-            "conversationID": conversationID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'markConversationMessageAsRead',
+        _buildParam({
+          "conversationID": conversationID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Enable Regular Deletion
   /// [isMsgDestruct] true: enable
@@ -319,12 +353,13 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setConversationIsMsgDestruct',
-          _buildParam({
-            "conversationID": conversationID,
-            "isMsgDestruct": isMsgDestruct,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setConversationIsMsgDestruct',
+        _buildParam({
+          "conversationID": conversationID,
+          "isMsgDestruct": isMsgDestruct,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Regularly Delete Chat Records
   /// [duration] Seconds
@@ -334,19 +369,25 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setConversationMsgDestructTime',
-          _buildParam({
-            "conversationID": conversationID,
-            "duration": duration,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setConversationMsgDestructTime',
+        _buildParam({
+          "conversationID": conversationID,
+          "duration": duration,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// Custom Sort for Conversation List
   List<ConversationInfo> simpleSort(List<ConversationInfo> list) => list
     ..sort((a, b) {
-      if ((a.isPinned == true && b.isPinned == true) || (a.isPinned != true && b.isPinned != true)) {
-        int aCompare = a.draftTextTime! > a.latestMsgSendTime! ? a.draftTextTime! : a.latestMsgSendTime!;
-        int bCompare = b.draftTextTime! > b.latestMsgSendTime! ? b.draftTextTime! : b.latestMsgSendTime!;
+      if ((a.isPinned == true && b.isPinned == true) ||
+          (a.isPinned != true && b.isPinned != true)) {
+        int aCompare = a.draftTextTime! > a.latestMsgSendTime!
+            ? a.draftTextTime!
+            : a.latestMsgSendTime!;
+        int bCompare = b.draftTextTime! > b.latestMsgSendTime!
+            ? b.draftTextTime!
+            : b.latestMsgSendTime!;
         if (aCompare > bCompare) {
           return -1;
         } else if (aCompare < bCompare) {

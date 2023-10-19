@@ -68,7 +68,11 @@ class UserInfo {
   }
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is UserInfo && runtimeType == other.runtimeType && userID == other.userID;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is UserInfo &&
+          runtimeType == other.runtimeType &&
+          userID == other.userID;
 
   @override
   int get hashCode => userID.hashCode;
@@ -85,9 +89,15 @@ class FullUserInfo {
   BlacklistInfo? blackInfo;
 
   FullUserInfo.fromJson(Map<String, dynamic> json) {
-    publicInfo = json['publicInfo'] != null ? PublicUserInfo.fromJson(json['publicInfo']) : null;
-    friendInfo = json['friendInfo'] != null ? FriendInfo.fromJson(json['friendInfo']) : null;
-    blackInfo = json['blackInfo'] != null ? BlacklistInfo.fromJson(json['blackInfo']) : null;
+    publicInfo = json['publicInfo'] != null
+        ? PublicUserInfo.fromJson(json['publicInfo'])
+        : null;
+    friendInfo = json['friendInfo'] != null
+        ? FriendInfo.fromJson(json['friendInfo'])
+        : null;
+    blackInfo = json['blackInfo'] != null
+        ? BlacklistInfo.fromJson(json['blackInfo'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -329,9 +339,9 @@ class FriendshipInfo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userID'] = this.userID;
-    data['result'] = this.result;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['userID'] = userID;
+    data['result'] = result;
     return data;
   }
 }
@@ -454,13 +464,15 @@ class UserStatusInfo {
   UserStatusInfo.fromJson(Map<String, dynamic> json) {
     userID = json['userID'];
     status = json['status'];
-    platformIDs = json["platformIDs"] == null ? [] : List<int>.from(json["platformIDs"].map((x) => x));
+    platformIDs = json["platformIDs"] == null
+        ? []
+        : List<int>.from(json["platformIDs"].map((x) => x));
   }
 
   Map<String, dynamic> toJson() {
-    final data = Map<String, dynamic>();
-    data['userID'] = this.userID;
-    data['status'] = this.status;
+    final data = <String, dynamic>{};
+    data['userID'] = userID;
+    data['status'] = status;
     data['platformIDs'] = List<dynamic>.from(platformIDs!.map((x) => x));
     return data;
   }

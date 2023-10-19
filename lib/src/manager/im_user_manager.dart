@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 
 class UserManager {
-  MethodChannel _channel;
+  final MethodChannel _channel;
   late OnUserListener listener;
 
   UserManager(this._channel);
@@ -21,12 +21,14 @@ class UserManager {
   }) =>
       _channel
           .invokeMethod(
-              'getUsersInfo',
-              _buildParam({
-                'userIDList': userIDList,
-                'operationID': Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toList(value, (v) => FullUserInfo.fromJson(v)));
+            'getUsersInfo',
+            _buildParam({
+              'userIDList': userIDList,
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+              (value) => Utils.toList(value, (v) => FullUserInfo.fromJson(v)));
 
   /// Get information of the currently logged-in user
   Future<UserInfo> getSelfUserInfo({
@@ -34,10 +36,11 @@ class UserManager {
   }) =>
       _channel
           .invokeMethod(
-              'getSelfUserInfo',
-              _buildParam({
-                'operationID': Utils.checkOperationID(operationID),
-              }))
+            'getSelfUserInfo',
+            _buildParam({
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => UserInfo.fromJson(map)));
 
   /// Modify the profile of the currently logged-in user
@@ -69,12 +72,15 @@ class UserManager {
   }) {
     return _channel
         .invokeMethod(
-            'subscribeUsersStatus',
-            _buildParam({
-              'userIDs': userIDs,
-              'operationID': Utils.checkOperationID(operationID),
-            }))
-        .then((value) => Utils.toList(value, (map) => UserStatusInfo.fromJson(map)));
+          'subscribeUsersStatus',
+          _buildParam({
+            'userIDs': userIDs,
+            'operationID': Utils.checkOperationID(operationID),
+          }),
+        )
+        .then(
+          (value) => Utils.toList(value, (map) => UserStatusInfo.fromJson(map)),
+        );
   }
 
   Future unsubscribeUsersStatus(
@@ -94,11 +100,14 @@ class UserManager {
   }) {
     return _channel
         .invokeMethod(
-            'getSubscribeUsersStatus',
-            _buildParam({
-              'operationID': Utils.checkOperationID(operationID),
-            }))
-        .then((value) => Utils.toList(value, (map) => UserStatusInfo.fromJson(map)));
+          'getSubscribeUsersStatus',
+          _buildParam({
+            'operationID': Utils.checkOperationID(operationID),
+          }),
+        )
+        .then(
+          (value) => Utils.toList(value, (map) => UserStatusInfo.fromJson(map)),
+        );
   }
 
   Future<List<UserStatusInfo>> getUserStatus(
@@ -107,12 +116,15 @@ class UserManager {
   }) {
     return _channel
         .invokeMethod(
-            'getUserStatus',
-            _buildParam({
-              'userIDs': userIDs,
-              'operationID': Utils.checkOperationID(operationID),
-            }))
-        .then((value) => Utils.toList(value, (map) => UserStatusInfo.fromJson(map)));
+          'getUserStatus',
+          _buildParam({
+            'userIDs': userIDs,
+            'operationID': Utils.checkOperationID(operationID),
+          }),
+        )
+        .then(
+          (value) => Utils.toList(value, (map) => UserStatusInfo.fromJson(map)),
+        );
   }
 
   Future<List<FullUserInfo>> getUsersInfoWithCache(
@@ -128,7 +140,8 @@ class UserManager {
               'groupID': groupID,
               'operationID': Utils.checkOperationID(operationID),
             }))
-        .then((value) => Utils.toList(value, (map) => FullUserInfo.fromJson(map)));
+        .then((value) =>
+            Utils.toList(value, (map) => FullUserInfo.fromJson(map)));
   }
 
   static Map _buildParam(Map param) {

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -15,12 +17,13 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     OpenIM.iMManager.initSDK(
-        platformID: 1,
-        apiAddr: '',
-        wsAddr: '',
-        dataDir: '/',
-        objectStorage: 'minio',
-        listener: OnConnectListener());
+      platformID: 1,
+      apiAddr: '',
+      wsAddr: '',
+      dataDir: '/',
+      objectStorage: 'minio',
+      listener: OnConnectListener(),
+    );
   }
 
   @override
@@ -32,7 +35,7 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
-            TextButton(onPressed: () {}, child: Text('login')),
+            TextButton(onPressed: () {}, child: const Text('login')),
           ],
         ),
       ),

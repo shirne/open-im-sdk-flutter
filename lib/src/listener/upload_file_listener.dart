@@ -31,7 +31,11 @@ class OnUploadFileListener {
   }
 
   void uploadProgress(
-      String id, int fileSize, int streamSize, int storageSize) {
+    String id,
+    int fileSize,
+    int streamSize,
+    int storageSize,
+  ) {
     onUploadProgress?.call(id, fileSize, streamSize, storageSize);
   }
 

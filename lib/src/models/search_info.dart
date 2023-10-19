@@ -31,10 +31,12 @@ class SearchResult {
     final data = Map<String, dynamic>();
     data['totalCount'] = this.totalCount;
     if (this.searchResultItems != null) {
-      data['searchResultItems'] = this.searchResultItems!.map((v) => v.toJson()).toList();
+      data['searchResultItems'] =
+          this.searchResultItems!.map((v) => v.toJson()).toList();
     }
     if (this.findResultItems != null) {
-      data['findResultItems'] = this.findResultItems!.map((v) => v.toJson()).toList();
+      data['findResultItems'] =
+          this.findResultItems!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -76,14 +78,14 @@ class SearchResultItems {
   }
 
   Map<String, dynamic> toJson() {
-    final data = Map<String, dynamic>();
-    data['conversationID'] = this.conversationID;
-    data['conversationType'] = this.conversationType;
-    data['showName'] = this.showName;
-    data['faceURL'] = this.faceURL;
-    data['messageCount'] = this.messageCount;
-    if (this.messageList != null) {
-      data['messageList'] = this.messageList!.map((v) => v.toJson()).toList();
+    final data = <String, dynamic>{};
+    data['conversationID'] = conversationID;
+    data['conversationType'] = conversationType;
+    data['showName'] = showName;
+    data['faceURL'] = faceURL;
+    data['messageCount'] = messageCount;
+    if (messageList != null) {
+      data['messageList'] = messageList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -106,9 +108,9 @@ class SearchParams {
   }
 
   Map<String, dynamic> toJson() {
-    final data = Map<String, dynamic>();
-    data['conversationID'] = this.conversationID;
-    data['clientMsgIDList'] = this.clientMsgIDList;
+    final data = <String, dynamic>{};
+    data['conversationID'] = conversationID;
+    data['clientMsgIDList'] = clientMsgIDList;
     return data;
   }
 }

@@ -117,27 +117,27 @@ class ConversationInfo {
 
   // Method to convert the ConversationInfo object to a JSON map
   Map<String, dynamic> toJson() {
-    final data = Map<String, dynamic>();
-    data['conversationID'] = this.conversationID;
-    data['conversationType'] = this.conversationType;
-    data['userID'] = this.userID;
-    data['groupID'] = this.groupID;
-    data['showName'] = this.showName;
-    data['faceURL'] = this.faceURL;
-    data['recvMsgOpt'] = this.recvMsgOpt;
-    data['unreadCount'] = this.unreadCount;
-    data['latestMsg'] = this.latestMsg?.toJson();
-    data['latestMsgSendTime'] = this.latestMsgSendTime;
-    data['draftText'] = this.draftText;
-    data['draftTextTime'] = this.draftTextTime;
-    data['isPinned'] = this.isPinned;
-    data['isPrivateChat'] = this.isPrivateChat;
-    data['burnDuration'] = this.burnDuration;
-    data['isNotInGroup'] = this.isNotInGroup;
-    data['groupAtType'] = this.groupAtType;
-    data['ex'] = this.ex;
-    data['isMsgDestruct'] = this.isMsgDestruct;
-    data['msgDestructTime'] = this.msgDestructTime;
+    final data = <String, dynamic>{};
+    data['conversationID'] = conversationID;
+    data['conversationType'] = conversationType;
+    data['userID'] = userID;
+    data['groupID'] = groupID;
+    data['showName'] = showName;
+    data['faceURL'] = faceURL;
+    data['recvMsgOpt'] = recvMsgOpt;
+    data['unreadCount'] = unreadCount;
+    data['latestMsg'] = latestMsg?.toJson();
+    data['latestMsgSendTime'] = latestMsgSendTime;
+    data['draftText'] = draftText;
+    data['draftTextTime'] = draftTextTime;
+    data['isPinned'] = isPinned;
+    data['isPrivateChat'] = isPrivateChat;
+    data['burnDuration'] = burnDuration;
+    data['isNotInGroup'] = isNotInGroup;
+    data['groupAtType'] = groupAtType;
+    data['ex'] = ex;
+    data['isMsgDestruct'] = isMsgDestruct;
+    data['msgDestructTime'] = msgDestructTime;
     return data;
   }
 
