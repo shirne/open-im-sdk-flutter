@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 
 class GroupManager {
-  MethodChannel _channel;
+  final MethodChannel _channel;
   late OnGroupListener listener;
 
   GroupManager(this._channel);
@@ -26,15 +26,18 @@ class GroupManager {
   }) =>
       _channel
           .invokeMethod(
-              'inviteUserToGroup',
-              _buildParam({
-                'groupID': groupID,
-                'userIDList': userIDList,
-                'reason': reason,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) =>
-              Utils.toList(value, (map) => GroupInviteResult.fromJson(map)));
+            'inviteUserToGroup',
+            _buildParam({
+              'groupID': groupID,
+              'userIDList': userIDList,
+              'reason': reason,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => GroupInviteResult.fromJson(map)),
+          );
 
   /// 移除组成员
   /// [groupID] 组ID
@@ -48,15 +51,18 @@ class GroupManager {
   }) =>
       _channel
           .invokeMethod(
-              'kickGroupMember',
-              _buildParam({
-                'groupID': groupID,
-                'userIDList': userIDList,
-                'reason': reason,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) =>
-              Utils.toList(value, (map) => GroupInviteResult.fromJson(map)));
+            'kickGroupMember',
+            _buildParam({
+              'groupID': groupID,
+              'userIDList': userIDList,
+              'reason': reason,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => GroupInviteResult.fromJson(map)),
+          );
 
   /// 查询组成员资料
   /// [groupID] 组ID
@@ -68,14 +74,17 @@ class GroupManager {
   }) =>
       _channel
           .invokeMethod(
-              'getGroupMembersInfo',
-              _buildParam({
-                'groupID': groupID,
-                'userIDList': userIDList,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) =>
-              Utils.toList(value, (map) => GroupMembersInfo.fromJson(map)));
+            'getGroupMembersInfo',
+            _buildParam({
+              'groupID': groupID,
+              'userIDList': userIDList,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => GroupMembersInfo.fromJson(map)),
+          );
 
   /// 分页获取组成员列表
   /// [groupID] 群ID
@@ -91,16 +100,19 @@ class GroupManager {
   }) =>
       _channel
           .invokeMethod(
-              'getGroupMemberList',
-              _buildParam({
-                'groupID': groupID,
-                'filter': filter,
-                'offset': offset,
-                'count': count,
-                'operationID': Utils.checkOperationID(operationID),
-              }))
-          .then((value) =>
-              Utils.toList(value, (map) => GroupMembersInfo.fromJson(map)));
+            'getGroupMemberList',
+            _buildParam({
+              'groupID': groupID,
+              'filter': filter,
+              'offset': offset,
+              'count': count,
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => GroupMembersInfo.fromJson(map)),
+          );
 
   /// 分页获取组成员列表
   /// [groupID] 群ID
@@ -116,32 +128,35 @@ class GroupManager {
   }) =>
       _channel
           .invokeMethod(
-              'getGroupMemberList',
-              _buildParam({
-                'groupID': groupID,
-                'filter': filter,
-                'offset': offset,
-                'count': count,
-                'operationID': Utils.checkOperationID(operationID),
-              }))
+            'getGroupMemberList',
+            _buildParam({
+              'groupID': groupID,
+              'filter': filter,
+              'offset': offset,
+              'count': count,
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toListMap(value));
 
   /// 查询已加入的组列表
   Future<List<GroupInfo>> getJoinedGroupList({String? operationID}) => _channel
       .invokeMethod(
-          'getJoinedGroupList',
-          _buildParam({
-            'operationID': Utils.checkOperationID(operationID),
-          }))
+        'getJoinedGroupList',
+        _buildParam({
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      )
       .then((value) => Utils.toList(value, (map) => GroupInfo.fromJson(map)));
 
   /// 查询已加入的组列表
   Future<List<dynamic>> getJoinedGroupListMap({String? operationID}) => _channel
       .invokeMethod(
-          'getJoinedGroupList',
-          _buildParam({
-            'operationID': Utils.checkOperationID(operationID),
-          }))
+        'getJoinedGroupList',
+        _buildParam({
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      )
       .then((value) => Utils.toListMap(value));
 
   /// 检查是否已加入组
@@ -152,11 +167,12 @@ class GroupManager {
   }) =>
       _channel
           .invokeMethod(
-              'isJoinGroup',
-              _buildParam({
-                'groupID': groupID,
-                'operationID': Utils.checkOperationID(operationID),
-              }))
+            'isJoinGroup',
+            _buildParam({
+              'groupID': groupID,
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => value == 'true' ? true : false);
 
   /// 创建一个组
@@ -176,16 +192,18 @@ class GroupManager {
   }) =>
       _channel
           .invokeMethod(
-              'createGroup',
-              _buildParam({
-                'groupInfo': groupInfo.toJson(),
-                'memberUserIDs': memberUserIDs,
-                'adminUserIDs': adminUserIDs,
-                'ownerUserID': ownerUserID,
-                'operationID': Utils.checkOperationID(operationID),
-              }))
+            'createGroup',
+            _buildParam({
+              'groupInfo': groupInfo.toJson(),
+              'memberUserIDs': memberUserIDs,
+              'adminUserIDs': adminUserIDs,
+              'ownerUserID': ownerUserID,
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
           .then(
-              (value) => Utils.toObj(value, (map) => GroupInfo.fromJson(map)));
+            (value) => Utils.toObj(value, (map) => GroupInfo.fromJson(map)),
+          );
 
   /// 编辑组资料
   /// [groupID] 被编辑的群ID
@@ -207,21 +225,22 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setGroupInfo',
-          _buildParam({
-            'groupInfo': {
-              "groupID": groupID,
-              "groupName": groupName,
-              "notification": notification,
-              "introduction": introduction,
-              "faceURL": faceURL,
-              "ex": ex,
-              'needVerification': needVerification,
-              'lookMemberInfo': lookMemberInfo,
-              'applyMemberFriend': applyMemberFriend,
-            },
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'setGroupInfo',
+        _buildParam({
+          'groupInfo': {
+            "groupID": groupID,
+            "groupName": groupName,
+            "notification": notification,
+            "introduction": introduction,
+            "faceURL": faceURL,
+            "ex": ex,
+            'needVerification': needVerification,
+            'lookMemberInfo': lookMemberInfo,
+            'applyMemberFriend': applyMemberFriend,
+          },
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 查询组信息
   /// [groupIDList] 组ID列表
@@ -231,13 +250,15 @@ class GroupManager {
   }) =>
       _channel
           .invokeMethod(
-              'getGroupsInfo',
-              _buildParam({
-                'groupIDList': groupIDList,
-                'operationID': Utils.checkOperationID(operationID),
-              }))
+            'getGroupsInfo',
+            _buildParam({
+              'groupIDList': groupIDList,
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
           .then(
-              (value) => Utils.toList(value, (map) => GroupInfo.fromJson(map)));
+            (value) => Utils.toList(value, (map) => GroupInfo.fromJson(map)),
+          );
 
   /// 申请加入组，需要通过管理员/群组同意。
   /// [joinSource] 2：通过邀请  3：通过搜索  4：通过二维码
@@ -248,13 +269,14 @@ class GroupManager {
     int joinSource = 3,
   }) =>
       _channel.invokeMethod(
-          'joinGroup',
-          _buildParam({
-            'groupID': groupID,
-            'reason': reason,
-            'joinSource': joinSource,
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'joinGroup',
+        _buildParam({
+          'groupID': groupID,
+          'reason': reason,
+          'joinSource': joinSource,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 退出组
   Future<dynamic> quitGroup({
@@ -262,11 +284,12 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'quitGroup',
-          _buildParam({
-            'groupID': groupID,
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'quitGroup',
+        _buildParam({
+          'groupID': groupID,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 转移组拥有者权限
   /// [groupID] 组ID
@@ -277,36 +300,49 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'transferGroupOwner',
-          _buildParam({
-            'groupID': groupID,
-            'userID': userID,
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'transferGroupOwner',
+        _buildParam({
+          'groupID': groupID,
+          'userID': userID,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 作为群主或者管理员，收到的群成员入群申请
-  Future<List<GroupApplicationInfo>> getGroupApplicationListAsRecipient(
-          {String? operationID}) =>
+  Future<List<GroupApplicationInfo>> getGroupApplicationListAsRecipient({
+    String? operationID,
+  }) =>
       _channel
           .invokeMethod(
-              'getGroupApplicationListAsRecipient',
-              _buildParam({
-                'operationID': Utils.checkOperationID(operationID),
-              }))
-          .then((value) =>
-              Utils.toList(value, (map) => GroupApplicationInfo.fromJson(map)));
+            'getGroupApplicationListAsRecipient',
+            _buildParam({
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) => Utils.toList(
+              value,
+              (map) => GroupApplicationInfo.fromJson(map),
+            ),
+          );
 
   /// 获取自己发出的入群申请记录
-  Future<List<GroupApplicationInfo>> getGroupApplicationListAsApplicant(
-          {String? operationID}) =>
+  Future<List<GroupApplicationInfo>> getGroupApplicationListAsApplicant({
+    String? operationID,
+  }) =>
       _channel
           .invokeMethod(
-              'getGroupApplicationListAsApplicant',
-              _buildParam({
-                'operationID': Utils.checkOperationID(operationID),
-              }))
-          .then((value) =>
-              Utils.toList(value, (map) => GroupApplicationInfo.fromJson(map)));
+            'getGroupApplicationListAsApplicant',
+            _buildParam({
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) => Utils.toList(
+              value,
+              (map) => GroupApplicationInfo.fromJson(map),
+            ),
+          );
 
   /// 管理员或者群主同意某人进入某群
   /// 注：主动申请入群需要通过管理员/群组处理，被别人拉入群不需要管理员/群组处理
@@ -319,13 +355,14 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'acceptGroupApplication',
-          _buildParam({
-            'groupID': groupID,
-            'userID': userID,
-            'handleMsg': handleMsg,
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'acceptGroupApplication',
+        _buildParam({
+          'groupID': groupID,
+          'userID': userID,
+          'handleMsg': handleMsg,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 管理员或者群主拒绝某人进入某群
   /// 注：主动申请入群需要通过管理员/群组处理，被别人拉入群不需要管理员/群组处理
@@ -339,13 +376,14 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'refuseGroupApplication',
-          _buildParam({
-            'groupID': groupID,
-            'userID': userID,
-            'handleMsg': handleMsg,
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'refuseGroupApplication',
+        _buildParam({
+          'groupID': groupID,
+          'userID': userID,
+          'handleMsg': handleMsg,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 解散群
   /// [groupID] 群ID
@@ -354,11 +392,12 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'dismissGroup',
-          _buildParam({
-            'groupID': groupID,
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'dismissGroup',
+        _buildParam({
+          'groupID': groupID,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 开启群禁言，所有群成员禁止发言
   /// [groupID] 将开启群禁言的组ID
@@ -369,12 +408,13 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'changeGroupMute',
-          _buildParam({
-            'groupID': groupID,
-            'mute': mute,
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'changeGroupMute',
+        _buildParam({
+          'groupID': groupID,
+          'mute': mute,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 禁言群成员
   /// [groupID] 群ID
@@ -387,13 +427,14 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'changeGroupMemberMute',
-          _buildParam({
-            'groupID': groupID,
-            'userID': userID,
-            'seconds': seconds,
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'changeGroupMemberMute',
+        _buildParam({
+          'groupID': groupID,
+          'userID': userID,
+          'seconds': seconds,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 设置群成员昵称
   /// [groupID] 群ID
@@ -406,13 +447,14 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setGroupMemberNickname',
-          _buildParam({
-            'groupID': groupID,
-            'userID': userID,
-            'groupNickname': groupNickname ?? '',
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'setGroupMemberNickname',
+        _buildParam({
+          'groupID': groupID,
+          'userID': userID,
+          'groupNickname': groupNickname ?? '',
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 查询群
   /// [keywordList] 搜索关键词，目前仅支持一个关键词搜索，不能为空
@@ -426,17 +468,19 @@ class GroupManager {
   }) =>
       _channel
           .invokeMethod(
-              'searchGroups',
-              _buildParam({
-                'searchParam': {
-                  'keywordList': keywordList,
-                  'isSearchGroupID': isSearchGroupID,
-                  'isSearchGroupName': isSearchGroupName,
-                },
-                'operationID': Utils.checkOperationID(operationID),
-              }))
+            'searchGroups',
+            _buildParam({
+              'searchParam': {
+                'keywordList': keywordList,
+                'isSearchGroupID': isSearchGroupID,
+                'isSearchGroupName': isSearchGroupName,
+              },
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
           .then(
-              (value) => Utils.toList(value, (map) => GroupInfo.fromJson(map)));
+            (value) => Utils.toList(value, (map) => GroupInfo.fromJson(map)),
+          );
 
   /// 设置群成员权限
   /// [groupID] 群ID
@@ -449,13 +493,14 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setGroupMemberRoleLevel',
-          _buildParam({
-            'groupID': groupID,
-            'userID': userID,
-            'roleLevel': roleLevel,
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'setGroupMemberRoleLevel',
+        _buildParam({
+          'groupID': groupID,
+          'userID': userID,
+          'roleLevel': roleLevel,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 根据加入时间分页获取组成员列表
   /// [groupID] 群ID
@@ -475,18 +520,21 @@ class GroupManager {
   }) =>
       _channel
           .invokeMethod(
-              'getGroupMemberListByJoinTimeFilter',
-              _buildParam({
-                'groupID': groupID,
-                'offset': offset,
-                'count': count,
-                'joinTimeBegin': joinTimeBegin,
-                'joinTimeEnd': joinTimeEnd,
-                'excludeUserIDList': excludeUserIDList,
-                'operationID': Utils.checkOperationID(operationID),
-              }))
-          .then((value) =>
-              Utils.toList(value, (map) => GroupMembersInfo.fromJson(map)));
+            'getGroupMemberListByJoinTimeFilter',
+            _buildParam({
+              'groupID': groupID,
+              'offset': offset,
+              'count': count,
+              'joinTimeBegin': joinTimeBegin,
+              'joinTimeEnd': joinTimeEnd,
+              'excludeUserIDList': excludeUserIDList,
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => GroupMembersInfo.fromJson(map)),
+          );
 
   /// 进群验证设置
   /// [groupID] 群ID
@@ -497,12 +545,13 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setGroupVerification',
-          _buildParam({
-            'groupID': groupID,
-            'needVerification': needVerification,
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'setGroupVerification',
+        _buildParam({
+          'groupID': groupID,
+          'needVerification': needVerification,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 不允许通过群获取成员资料
   /// [groupID] 群ID
@@ -513,12 +562,13 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setGroupLookMemberInfo',
-          _buildParam({
-            'groupID': groupID,
-            'status': status,
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'setGroupLookMemberInfo',
+        _buildParam({
+          'groupID': groupID,
+          'status': status,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 不允许通过群添加好友
   /// [groupID] 群ID
@@ -529,12 +579,13 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setGroupApplyMemberFriend',
-          _buildParam({
-            'groupID': groupID,
-            'status': status,
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'setGroupApplyMemberFriend',
+        _buildParam({
+          'groupID': groupID,
+          'status': status,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 获取群拥有者，管理员
   /// [groupId] 群ID
@@ -544,13 +595,16 @@ class GroupManager {
   }) =>
       _channel
           .invokeMethod(
-              'getGroupMemberOwnerAndAdmin',
-              _buildParam({
-                'groupID': groupID,
-                'operationID': Utils.checkOperationID(operationID),
-              }))
-          .then((value) =>
-              Utils.toList(value, (map) => GroupMembersInfo.fromJson(map)));
+            'getGroupMemberOwnerAndAdmin',
+            _buildParam({
+              'groupID': groupID,
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => GroupMembersInfo.fromJson(map)),
+          );
 
   /// 查询群
   /// [groupID] 群id
@@ -570,20 +624,23 @@ class GroupManager {
   }) =>
       _channel
           .invokeMethod(
-              'searchGroupMembers',
-              _buildParam({
-                'searchParam': {
-                  'groupID': groupID,
-                  'keywordList': keywordList,
-                  'isSearchUserID': isSearchUserID,
-                  'isSearchMemberNickname': isSearchMemberNickname,
-                  'offset': offset,
-                  'count': count,
-                },
-                'operationID': Utils.checkOperationID(operationID),
-              }))
-          .then((value) =>
-              Utils.toList(value, (map) => GroupMembersInfo.fromJson(map)));
+            'searchGroupMembers',
+            _buildParam({
+              'searchParam': {
+                'groupID': groupID,
+                'keywordList': keywordList,
+                'isSearchUserID': isSearchUserID,
+                'isSearchMemberNickname': isSearchMemberNickname,
+                'offset': offset,
+                'count': count,
+              },
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => GroupMembersInfo.fromJson(map)),
+          );
 
   /// 查询群
   /// [groupID] 群id
@@ -603,18 +660,19 @@ class GroupManager {
   }) =>
       _channel
           .invokeMethod(
-              'searchGroupMembers',
-              _buildParam({
-                'searchParam': {
-                  'groupID': groupID,
-                  'keywordList': keywordList,
-                  'isSearchUserID': isSearchUserID,
-                  'isSearchMemberNickname': isSearchMemberNickname,
-                  'offset': offset,
-                  'count': count,
-                },
-                'operationID': Utils.checkOperationID(operationID),
-              }))
+            'searchGroupMembers',
+            _buildParam({
+              'searchParam': {
+                'groupID': groupID,
+                'keywordList': keywordList,
+                'isSearchUserID': isSearchUserID,
+                'isSearchMemberNickname': isSearchMemberNickname,
+                'offset': offset,
+                'count': count,
+              },
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toListMap(value));
 
   /// 修改GroupMemberInfo ex字段
@@ -625,15 +683,16 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setGroupMemberInfo',
-          _buildParam({
-            'info': {
-              'groupID': groupID,
-              'userID': userID,
-              'ex': ex,
-            },
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'setGroupMemberInfo',
+        _buildParam({
+          'info': {
+            'groupID': groupID,
+            'userID': userID,
+            'ex': ex,
+          },
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   static Map _buildParam(Map param) {
     param["ManagerName"] = "groupManager";

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 
 class ConversationManager {
-  MethodChannel _channel;
+  final MethodChannel _channel;
   late OnConversationListener listener;
 
   ConversationManager(this._channel);
@@ -16,16 +16,20 @@ class ConversationManager {
   }
 
   /// 获取所有会话
-  Future<List<ConversationInfo>> getAllConversationList(
-          {String? operationID}) =>
+  Future<List<ConversationInfo>> getAllConversationList({
+    String? operationID,
+  }) =>
       _channel
           .invokeMethod(
-              'getAllConversationList',
-              _buildParam({
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) =>
-              Utils.toList(value, (map) => ConversationInfo.fromJson(map)));
+            'getAllConversationList',
+            _buildParam({
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => ConversationInfo.fromJson(map)),
+          );
 
   /// 分页获取会话
   /// [offset] 开始下标
@@ -37,14 +41,17 @@ class ConversationManager {
   }) =>
       _channel
           .invokeMethod(
-              'getConversationListSplit',
-              _buildParam({
-                'offset': offset,
-                'count': count,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) =>
-              Utils.toList(value, (map) => ConversationInfo.fromJson(map)));
+            'getConversationListSplit',
+            _buildParam({
+              'offset': offset,
+              'count': count,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => ConversationInfo.fromJson(map)),
+          );
 
   /// 查询会话，如果会话不存在会自动生成一个
   /// [sourceID] 如果是单聊会话传userID，如果是群聊会话传GroupID
@@ -56,14 +63,17 @@ class ConversationManager {
   }) =>
       _channel
           .invokeMethod(
-              'getOneConversation',
-              _buildParam({
-                "sourceID": sourceID,
-                "sessionType": sessionType,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) =>
-              Utils.toObj(value, (map) => ConversationInfo.fromJson(map)));
+            'getOneConversation',
+            _buildParam({
+              "sourceID": sourceID,
+              "sessionType": sessionType,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toObj(value, (map) => ConversationInfo.fromJson(map)),
+          );
 
   /// 根据会话id获取多个会话
   /// [conversationIDList] 会话id列表
@@ -73,13 +83,16 @@ class ConversationManager {
   }) =>
       _channel
           .invokeMethod(
-              'getMultipleConversation',
-              _buildParam({
-                "conversationIDList": conversationIDList,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) =>
-              Utils.toList(value, (map) => ConversationInfo.fromJson(map)));
+            'getMultipleConversation',
+            _buildParam({
+              "conversationIDList": conversationIDList,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => ConversationInfo.fromJson(map)),
+          );
 
   /// 设置会话草稿
   /// [conversationID] 会话id
@@ -90,12 +103,13 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setConversationDraft',
-          _buildParam({
-            "conversationID": conversationID,
-            "draftText": draftText,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setConversationDraft',
+        _buildParam({
+          "conversationID": conversationID,
+          "draftText": draftText,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 置顶会话
   /// [conversationID] 会话id
@@ -106,12 +120,13 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'pinConversation',
-          _buildParam({
-            "conversationID": conversationID,
-            "isPinned": isPinned,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'pinConversation',
+        _buildParam({
+          "conversationID": conversationID,
+          "isPinned": isPinned,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 置顶会话
   /// [conversationID] 会话id
@@ -120,11 +135,12 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'hideConversation',
-          _buildParam({
-            "conversationID": conversationID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'hideConversation',
+        _buildParam({
+          "conversationID": conversationID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 获取未读消息总数
   /// int.tryParse(count) ?? 0;
@@ -132,10 +148,11 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'getTotalUnreadMsgCount',
-          _buildParam({
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'getTotalUnreadMsgCount',
+        _buildParam({
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 查询会话id
   /// [sourceID] 如果是单聊值传用户ID，如果是群聊值传组ID
@@ -160,12 +177,13 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setConversationRecvMessageOpt',
-          _buildParam({
-            "conversationID": conversationID,
-            "status": status,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setConversationRecvMessageOpt',
+        _buildParam({
+          "conversationID": conversationID,
+          "status": status,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 查询免打扰状态
   /// [conversationIDList] 会话id列表
@@ -176,11 +194,12 @@ class ConversationManager {
   }) =>
       _channel
           .invokeMethod(
-              'getConversationRecvMessageOpt',
-              _buildParam({
-                "conversationIDList": conversationIDList,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'getConversationRecvMessageOpt',
+            _buildParam({
+              "conversationIDList": conversationIDList,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toListMap(value));
 
   /// 阅后即焚
@@ -192,12 +211,13 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setConversationPrivateChat',
-          _buildParam({
-            "conversationID": conversationID,
-            "isPrivate": isPrivate,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setConversationPrivateChat',
+        _buildParam({
+          "conversationID": conversationID,
+          "isPrivate": isPrivate,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 删除本地以及服务器的会话
   /// [conversationID] 会话ID
@@ -206,11 +226,12 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'deleteConversationAndDeleteAllMsg',
-          _buildParam({
-            "conversationID": conversationID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'deleteConversationAndDeleteAllMsg',
+        _buildParam({
+          "conversationID": conversationID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 清空会话里的消息
   /// [conversationID] 会话ID
@@ -219,21 +240,23 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'clearConversationAndDeleteAllMsg',
-          _buildParam({
-            "conversationID": conversationID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'clearConversationAndDeleteAllMsg',
+        _buildParam({
+          "conversationID": conversationID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 删除所有本地会话
   Future<dynamic> deleteAllConversationFromLocal({
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'deleteAllConversationFromLocal',
-          _buildParam({
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'deleteAllConversationFromLocal',
+        _buildParam({
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 重置强提醒标识[GroupAtType]
   /// [conversationID] 会话id
@@ -242,21 +265,23 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'resetConversationGroupAtType',
-          _buildParam({
-            "conversationID": conversationID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'resetConversationGroupAtType',
+        _buildParam({
+          "conversationID": conversationID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 查询@所有人标识
   Future<dynamic> getAtAllTag({
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'getAtAllTag',
-          _buildParam({
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'getAtAllTag',
+        _buildParam({
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 查询@所有人标识
   String get atAllTag => 'AtAllTag';
@@ -268,11 +293,12 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setGlobalRecvMessageOpt',
-          _buildParam({
-            "status": status,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setGlobalRecvMessageOpt',
+        _buildParam({
+          "status": status,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 设置阅后即焚时长
   /// [conversationID] 会话id
@@ -283,12 +309,13 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setConversationBurnDuration',
-          _buildParam({
-            "conversationID": conversationID,
-            "burnDuration": burnDuration,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setConversationBurnDuration',
+        _buildParam({
+          "conversationID": conversationID,
+          "burnDuration": burnDuration,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 标记消息已读
   /// [conversationID] 会话ID
@@ -298,11 +325,12 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'markConversationMessageAsRead',
-          _buildParam({
-            "conversationID": conversationID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'markConversationMessageAsRead',
+        _buildParam({
+          "conversationID": conversationID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 开启定期删除
   /// [isMsgDestruct] true 开启
@@ -312,12 +340,13 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setConversationIsMsgDestruct',
-          _buildParam({
-            "conversationID": conversationID,
-            "isMsgDestruct": isMsgDestruct,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setConversationIsMsgDestruct',
+        _buildParam({
+          "conversationID": conversationID,
+          "isMsgDestruct": isMsgDestruct,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 定期删除聊天记录
   /// [duration] 秒
@@ -327,12 +356,13 @@ class ConversationManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setConversationMsgDestructTime',
-          _buildParam({
-            "conversationID": conversationID,
-            "duration": duration,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'setConversationMsgDestructTime',
+        _buildParam({
+          "conversationID": conversationID,
+          "duration": duration,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 会话列表自定义排序规则。
   List<ConversationInfo> simpleSort(List<ConversationInfo> list) => list

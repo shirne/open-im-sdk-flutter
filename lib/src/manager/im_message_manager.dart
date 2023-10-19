@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 
 class MessageManager {
-  MethodChannel _channel;
+  final MethodChannel _channel;
 
   // List<AdvancedMsgListener> advancedMsgListeners = List.empty(growable: true);
   OnMsgSendProgressListener? msgSendProgressListener;
@@ -14,13 +14,14 @@ class MessageManager {
 
   /// 消息监听
   Future setAdvancedMsgListener(OnAdvancedMsgListener listener) {
-    this.msgListener = listener;
+    msgListener = listener;
     // advancedMsgListeners.add(listener);
     return _channel.invokeMethod(
-        'setAdvancedMsgListener',
-        _buildParam({
-          'id': listener.id,
-        }));
+      'setAdvancedMsgListener',
+      _buildParam({
+        'id': listener.id,
+      }),
+    );
   }
 
   /// 消息发送进度监听
@@ -42,14 +43,15 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'sendMessage',
-              _buildParam({
-                'message': message.toJson(),
-                'offlinePushInfo': offlinePushInfo.toJson(),
-                'userID': userID ?? '',
-                'groupID': groupID ?? '',
-                'operationID': Utils.checkOperationID(operationID),
-              }))
+            'sendMessage',
+            _buildParam({
+              'message': message.toJson(),
+              'offlinePushInfo': offlinePushInfo.toJson(),
+              'userID': userID ?? '',
+              'groupID': groupID ?? '',
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 删除本地消息
@@ -60,12 +62,13 @@ class MessageManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'deleteMessageFromLocalStorage',
-          _buildParam({
-            "conversationID": conversationID,
-            "clientMsgID": clientMsgID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'deleteMessageFromLocalStorage',
+        _buildParam({
+          "conversationID": conversationID,
+          "clientMsgID": clientMsgID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// core-sdk: DeleteMessage
   /// 删除本地跟服务器的指定的消息
@@ -76,32 +79,35 @@ class MessageManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'deleteMessageFromLocalAndSvr',
-          _buildParam({
-            "conversationID": conversationID,
-            "clientMsgID": clientMsgID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'deleteMessageFromLocalAndSvr',
+        _buildParam({
+          "conversationID": conversationID,
+          "clientMsgID": clientMsgID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 删除本地所有聊天记录
   Future<dynamic> deleteAllMsgFromLocal({
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'deleteAllMsgFromLocal',
-          _buildParam({
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'deleteAllMsgFromLocal',
+        _buildParam({
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 删除本地跟服务器所有聊天记录
   Future<dynamic> deleteAllMsgFromLocalAndSvr({
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'deleteAllMsgFromLocalAndSvr',
-          _buildParam({
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'deleteAllMsgFromLocalAndSvr',
+        _buildParam({
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 插入单聊消息到本地
   /// [receiverID] 接收者id
@@ -115,13 +121,14 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'insertSingleMessageToLocalStorage',
-              _buildParam({
-                "message": message?.toJson(),
-                "receiverID": receiverID,
-                "senderID": senderID,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'insertSingleMessageToLocalStorage',
+            _buildParam({
+              "message": message?.toJson(),
+              "receiverID": receiverID,
+              "senderID": senderID,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 插入群聊消息到本地
@@ -136,13 +143,14 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'insertGroupMessageToLocalStorage',
-              _buildParam({
-                "message": message?.toJson(),
-                "groupID": groupID,
-                "senderID": senderID,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'insertGroupMessageToLocalStorage',
+            _buildParam({
+              "message": message?.toJson(),
+              "groupID": groupID,
+              "senderID": senderID,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 正在输入提示
@@ -153,12 +161,13 @@ class MessageManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'typingStatusUpdate',
-          _buildParam({
-            "msgTip": msgTip,
-            "userID": userID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'typingStatusUpdate',
+        _buildParam({
+          "msgTip": msgTip,
+          "userID": userID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 创建文本消息
   Future<Message> createTextMessage({
@@ -167,11 +176,12 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'createTextMessage',
-              _buildParam({
-                'text': text,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'createTextMessage',
+            _buildParam({
+              'text': text,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 创建@消息
@@ -283,14 +293,15 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'createVideoMessage',
-              _buildParam({
-                'videoPath': videoPath,
-                'videoType': videoType,
-                'duration': duration,
-                'snapshotPath': snapshotPath,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'createVideoMessage',
+            _buildParam({
+              'videoPath': videoPath,
+              'videoType': videoType,
+              'duration': duration,
+              'snapshotPath': snapshotPath,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 创建视频消息
@@ -307,14 +318,15 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'createVideoMessageFromFullPath',
-              _buildParam({
-                'videoPath': videoPath,
-                'videoType': videoType,
-                'duration': duration,
-                'snapshotPath': snapshotPath,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'createVideoMessageFromFullPath',
+            _buildParam({
+              'videoPath': videoPath,
+              'videoType': videoType,
+              'duration': duration,
+              'snapshotPath': snapshotPath,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 创建文件消息
@@ -327,12 +339,13 @@ class MessageManager {
   }) {
     return _channel
         .invokeMethod(
-            'createFileMessage',
-            _buildParam({
-              'filePath': filePath,
-              'fileName': fileName,
-              "operationID": Utils.checkOperationID(operationID),
-            }))
+          'createFileMessage',
+          _buildParam({
+            'filePath': filePath,
+            'fileName': fileName,
+            "operationID": Utils.checkOperationID(operationID),
+          }),
+        )
         .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
   }
 
@@ -346,12 +359,13 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'createFileMessageFromFullPath',
-              _buildParam({
-                'filePath': filePath,
-                'fileName': fileName,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'createFileMessageFromFullPath',
+            _buildParam({
+              'filePath': filePath,
+              'fileName': fileName,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 创建合并消息
@@ -366,13 +380,14 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'createMergerMessage',
-              _buildParam({
-                'messageList': messageList.map((e) => e.toJson()).toList(),
-                'title': title,
-                'summaryList': summaryList,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'createMergerMessage',
+            _buildParam({
+              'messageList': messageList.map((e) => e.toJson()).toList(),
+              'title': title,
+              'summaryList': summaryList,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 创建转发消息
@@ -383,11 +398,12 @@ class MessageManager {
   }) {
     return _channel
         .invokeMethod(
-            'createForwardMessage',
-            _buildParam({
-              'message': message.toJson(),
-              "operationID": Utils.checkOperationID(operationID),
-            }))
+          'createForwardMessage',
+          _buildParam({
+            'message': message.toJson(),
+            "operationID": Utils.checkOperationID(operationID),
+          }),
+        )
         .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
   }
 
@@ -403,13 +419,14 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'createLocationMessage',
-              _buildParam({
-                'latitude': latitude,
-                'longitude': longitude,
-                'description': description,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'createLocationMessage',
+            _buildParam({
+              'latitude': latitude,
+              'longitude': longitude,
+              'description': description,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 创建自定义消息
@@ -424,13 +441,14 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'createCustomMessage',
-              _buildParam({
-                'data': data,
-                'extension': extension,
-                'description': description,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'createCustomMessage',
+            _buildParam({
+              'data': data,
+              'extension': extension,
+              'description': description,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 创建引用消息
@@ -443,12 +461,13 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'createQuoteMessage',
-              _buildParam({
-                'quoteText': text,
-                'quoteMessage': quoteMsg.toJson(),
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'createQuoteMessage',
+            _buildParam({
+              'quoteText': text,
+              'quoteMessage': quoteMsg.toJson(),
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 创建卡片消息
@@ -462,16 +481,17 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'createCardMessage',
-              _buildParam({
-                'cardMessage': {
-                  'userID': userID,
-                  'nickname': nickname,
-                  'faceURL': faceURL,
-                  'ex': ex,
-                },
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'createCardMessage',
+            _buildParam({
+              'cardMessage': {
+                'userID': userID,
+                'nickname': nickname,
+                'faceURL': faceURL,
+                'ex': ex,
+              },
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 创建自定义表情消息
@@ -484,12 +504,13 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'createFaceMessage',
-              _buildParam({
-                'index': index,
-                'data': data,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'createFaceMessage',
+            _buildParam({
+              'index': index,
+              'data': data,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 搜索消息
@@ -516,22 +537,25 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'searchLocalMessages',
-              _buildParam({
-                'filter': {
-                  'conversationID': conversationID,
-                  'keywordList': keywordList,
-                  'keywordListMatchType': keywordListMatchType,
-                  'senderUserIDList': senderUserIDList,
-                  'messageTypeList': messageTypeList,
-                  'searchTimePosition': searchTimePosition,
-                  'searchTimePeriod': searchTimePeriod,
-                  'pageIndex': pageIndex,
-                  'count': count,
-                },
-                'operationID': Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toObj(value, (map) => SearchResult.fromJson(map)));
+            'searchLocalMessages',
+            _buildParam({
+              'filter': {
+                'conversationID': conversationID,
+                'keywordList': keywordList,
+                'keywordListMatchType': keywordListMatchType,
+                'senderUserIDList': senderUserIDList,
+                'messageTypeList': messageTypeList,
+                'searchTimePosition': searchTimePosition,
+                'searchTimePeriod': searchTimePeriod,
+                'pageIndex': pageIndex,
+                'count': count,
+              },
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) => Utils.toObj(value, (map) => SearchResult.fromJson(map)),
+          );
 
   /// 撤回消息
   /// [message] 被撤回的消息体
@@ -541,12 +565,13 @@ class MessageManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'revokeMessage',
-          _buildParam({
-            'conversationID': conversationID,
-            'clientMsgID': clientMsgID,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'revokeMessage',
+        _buildParam({
+          'conversationID': conversationID,
+          'clientMsgID': clientMsgID,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 标记消息已读
   /// [conversationID] 会话ID
@@ -557,12 +582,13 @@ class MessageManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'markMessagesAsReadByMsgID',
-          _buildParam({
-            "conversationID": conversationID,
-            "messageIDList": messageIDList,
-            "operationID": Utils.checkOperationID(operationID),
-          }));
+        'markMessagesAsReadByMsgID',
+        _buildParam({
+          "conversationID": conversationID,
+          "messageIDList": messageIDList,
+          "operationID": Utils.checkOperationID(operationID),
+        }),
+      );
 
   /// 获取聊天记录(以startMsg为节点，以前的聊天记录)
   /// [conversationID] 会话id，查询通知时可用
@@ -578,15 +604,19 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'getAdvancedHistoryMessageList',
-              _buildParam({
-                'conversationID': conversationID ?? '',
-                'startClientMsgID': startMsg?.clientMsgID ?? '',
-                'count': count ?? 40,
-                'lastMinSeq': lastMinSeq ?? 0,
-                'operationID': Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toObj(value, (map) => AdvancedMessage.fromJson(map)));
+            'getAdvancedHistoryMessageList',
+            _buildParam({
+              'conversationID': conversationID ?? '',
+              'startClientMsgID': startMsg?.clientMsgID ?? '',
+              'count': count ?? 40,
+              'lastMinSeq': lastMinSeq ?? 0,
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toObj(value, (map) => AdvancedMessage.fromJson(map)),
+          );
 
   /// 获取聊天记录(以startMsg为节点，新收到的聊天记录)，用在全局搜索定位某一条消息，然后此条消息后新增的消息
   /// [conversationID] 会话id，查询通知时可用
@@ -601,15 +631,19 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'getAdvancedHistoryMessageListReverse',
-              _buildParam({
-                'conversationID': conversationID ?? '',
-                'startClientMsgID': startMsg?.clientMsgID ?? '',
-                'count': count ?? 40,
-                'lastMinSeq': lastMinSeq ?? 0,
-                'operationID': Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toObj(value, (map) => AdvancedMessage.fromJson(map)));
+            'getAdvancedHistoryMessageListReverse',
+            _buildParam({
+              'conversationID': conversationID ?? '',
+              'startClientMsgID': startMsg?.clientMsgID ?? '',
+              'count': count ?? 40,
+              'lastMinSeq': lastMinSeq ?? 0,
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toObj(value, (map) => AdvancedMessage.fromJson(map)),
+          );
 
   /// 查找消息详细
   /// [conversationID] 会话id
@@ -620,12 +654,15 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'findMessageList',
-              _buildParam({
-                'searchParams': searchParams.map((e) => e.toJson()).toList(),
-                'operationID': Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toObj(value, (map) => SearchResult.fromJson(map)));
+            'findMessageList',
+            _buildParam({
+              'searchParams': searchParams.map((e) => e.toJson()).toList(),
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) => Utils.toObj(value, (map) => SearchResult.fromJson(map)),
+          );
 
   /// 富文本消息
   /// [text] 输入内容
@@ -658,13 +695,14 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'createAdvancedQuoteMessage',
-              _buildParam({
-                'quoteText': text,
-                'quoteMessage': quoteMsg.toJson(),
-                'richMessageInfoList': list.map((e) => e.toJson()).toList(),
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'createAdvancedQuoteMessage',
+            _buildParam({
+              'quoteText': text,
+              'quoteMessage': quoteMsg.toJson(),
+              'richMessageInfoList': list.map((e) => e.toJson()).toList(),
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 发送消息
@@ -681,14 +719,15 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'sendMessageNotOss',
-              _buildParam({
-                'message': message.toJson(),
-                'offlinePushInfo': offlinePushInfo.toJson(),
-                'userID': userID ?? '',
-                'groupID': groupID ?? '',
-                'operationID': Utils.checkOperationID(operationID),
-              }))
+            'sendMessageNotOss',
+            _buildParam({
+              'message': message.toJson(),
+              'offlinePushInfo': offlinePushInfo.toJson(),
+              'userID': userID ?? '',
+              'groupID': groupID ?? '',
+              'operationID': Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 创建图片消息
@@ -732,11 +771,12 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'createVideoMessageByURL',
-              _buildParam({
-                'videoElem': videoElem.toJson(),
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'createVideoMessageByURL',
+            _buildParam({
+              'videoElem': videoElem.toJson(),
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   /// 创建视频消息
@@ -746,16 +786,17 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'createFileMessageByURL',
-              _buildParam({
-                'fileElem': fileElem.toJson(),
-                "operationID": Utils.checkOperationID(operationID),
-              }))
+            'createFileMessageByURL',
+            _buildParam({
+              'fileElem': fileElem.toJson(),
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
           .then((value) => Utils.toObj(value, (map) => Message.fromJson(map)));
 
   ///
   Future setCustomBusinessListener(OnCustomBusinessListener listener) {
-    this.customBusinessListener = listener;
+    customBusinessListener = listener;
     return _channel.invokeMethod('setCustomBusinessListener', _buildParam({}));
   }
 
@@ -766,18 +807,19 @@ class MessageManager {
     String? operationID,
   }) {
     return _channel.invokeMethod(
-        'setMessageLocalEx',
-        _buildParam({
-          "conversationID": conversationID,
-          "clientMsgID": clientMsgID,
-          "localEx": localEx,
-          "operationID": Utils.checkOperationID(operationID),
-        }));
+      'setMessageLocalEx',
+      _buildParam({
+        "conversationID": conversationID,
+        "clientMsgID": clientMsgID,
+        "localEx": localEx,
+        "operationID": Utils.checkOperationID(operationID),
+      }),
+    );
   }
 
   ///
   Future setMessageKvInfoListener(OnMessageKvInfoListener listener) {
-    this.messageKvInfoListener = listener;
+    messageKvInfoListener = listener;
     return _channel.invokeMethod('setMessageKvInfoListener', _buildParam({}));
   }
 
@@ -788,13 +830,17 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'setMessageReactionExtensions',
-              _buildParam({
-                'message': message.toJson(),
-                'list': list.map((e) => e.toJson()).toList(),
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toList(value, (map) => TypeKeySetResult.fromJson(map)));
+            'setMessageReactionExtensions',
+            _buildParam({
+              'message': message.toJson(),
+              'list': list.map((e) => e.toJson()).toList(),
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => TypeKeySetResult.fromJson(map)),
+          );
 
   Future<List<TypeKeySetResult>> deleteMessageReactionExtensions({
     required Message message,
@@ -803,13 +849,17 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'deleteMessageReactionExtensions',
-              _buildParam({
-                'message': message.toJson(),
-                'list': list,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toList(value, (map) => TypeKeySetResult.fromJson(map)));
+            'deleteMessageReactionExtensions',
+            _buildParam({
+              'message': message.toJson(),
+              'list': list,
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => TypeKeySetResult.fromJson(map)),
+          );
 
   Future<List<MessageTypeKeyMapping>> getMessageListReactionExtensions({
     List<Message> messageList = const [],
@@ -817,12 +867,18 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'getMessageListReactionExtensions',
-              _buildParam({
-                'messageList': messageList.map((e) => e.toJson()).toList(),
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toList(value, (map) => MessageTypeKeyMapping.fromJson(map)));
+            'getMessageListReactionExtensions',
+            _buildParam({
+              'messageList': messageList.map((e) => e.toJson()).toList(),
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) => Utils.toList(
+              value,
+              (map) => MessageTypeKeyMapping.fromJson(map),
+            ),
+          );
 
   Future<List<TypeKeySetResult>> addMessageReactionExtensions({
     required Message message,
@@ -831,13 +887,17 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'addMessageReactionExtensions',
-              _buildParam({
-                'message': message.toJson(),
-                'list': list.map((e) => e.toJson()).toList(),
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toList(value, (map) => TypeKeySetResult.fromJson(map)));
+            'addMessageReactionExtensions',
+            _buildParam({
+              'message': message.toJson(),
+              'list': list.map((e) => e.toJson()).toList(),
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) =>
+                Utils.toList(value, (map) => TypeKeySetResult.fromJson(map)),
+          );
 
   Future<List<MessageTypeKeyMapping>> getMessageListSomeReactionExtensions({
     List<Message> messageList = const [],
@@ -846,13 +906,19 @@ class MessageManager {
   }) =>
       _channel
           .invokeMethod(
-              'getMessageListSomeReactionExtensions',
-              _buildParam({
-                'messageList': messageList.map((e) => e.toJson()).toList(),
-                'list': kvList.map((e) => e.toJson()).toList(),
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toList(value, (map) => MessageTypeKeyMapping.fromJson(map)));
+            'getMessageListSomeReactionExtensions',
+            _buildParam({
+              'messageList': messageList.map((e) => e.toJson()).toList(),
+              'list': kvList.map((e) => e.toJson()).toList(),
+              "operationID": Utils.checkOperationID(operationID),
+            }),
+          )
+          .then(
+            (value) => Utils.toList(
+              value,
+              (map) => MessageTypeKeyMapping.fromJson(map),
+            ),
+          );
 
   static Map _buildParam(Map param) {
     param["ManagerName"] = "messageManager";

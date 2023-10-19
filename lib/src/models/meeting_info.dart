@@ -13,10 +13,10 @@ class MeetingInfoList {
   }
 
   Map<String, dynamic> toJson() {
-    final data = Map<String, dynamic>();
-    if (this.meetingInfoList != null) {
+    final data = <String, dynamic>{};
+    if (meetingInfoList != null) {
       data['meetingInfoList'] =
-          this.meetingInfoList!.map((v) => v.toJson()).toList();
+          meetingInfoList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -146,10 +146,10 @@ class MeetingStreamEvent {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['roomID'] = this.roomID;
-    data['streamType'] = this.streamType;
-    data['mute'] = this.mute;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['roomID'] = roomID;
+    data['streamType'] = streamType;
+    data['mute'] = mute;
     return data;
   }
 }
