@@ -5,7 +5,7 @@ import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 
 class ConversationManager {
   final MethodChannel _channel;
-  late OnConversationListener listener;
+  OnConversationListener? listener;
 
   ConversationManager(this._channel);
 

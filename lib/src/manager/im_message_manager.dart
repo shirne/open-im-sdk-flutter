@@ -5,7 +5,7 @@ class MessageManager {
   final MethodChannel _channel;
 
   OnMsgSendProgressListener? msgSendProgressListener;
-  late OnAdvancedMsgListener msgListener;
+  OnAdvancedMsgListener? msgListener;
   OnCustomBusinessListener? customBusinessListener;
 
   MessageManager(this._channel);
