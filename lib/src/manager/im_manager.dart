@@ -27,13 +27,13 @@ class IMManager {
         messageManager = MessageManager(_channel),
         groupManager = GroupManager(_channel),
         userManager = UserManager(_channel) {
-    _addNativeCallback(_channel);
+    _addNativeCallback();
   }
 
-  void _addNativeCallback(MethodChannel channel) {
-    channel.setMethodCallHandler((call) {
+  void _addNativeCallback() {
+    _channel.setMethodCallHandler((call) async {
       try {
-        Logger.print('Flutter : $call');
+        Logger.print('Flutter Handler : ${call.method} ${call.arguments}');
         if (call.method == ListenerType.connectListener) {
           String type = call.arguments['type'];
           switch (type) {
