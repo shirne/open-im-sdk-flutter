@@ -38,7 +38,11 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
+    if (project.android.hasProperty("namespace")) {
+        namespace 'io.openim.flutter_openim_sdk'
+    }
+
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 21

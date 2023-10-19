@@ -24,6 +24,7 @@ import io.openim.flutter_openim_sdk.manager.GroupManager;
 import io.openim.flutter_openim_sdk.manager.IMManager;
 import io.openim.flutter_openim_sdk.manager.MessageManager;
 import io.openim.flutter_openim_sdk.manager.UserManager;
+import io.openim.flutter_openim_sdk.util.CommonUtil;
 
 
 /**
@@ -60,6 +61,7 @@ public class FlutterOpenimSdkPlugin implements FlutterPlugin, MethodCallHandler,
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+        Log.i("F-OpenIMSDK", "onAttachedToEngine");
         channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), CHANNEL_NAME);
         context = flutterPluginBinding.getApplicationContext();
         channel.setMethodCallHandler(this);
@@ -70,11 +72,24 @@ public class FlutterOpenimSdkPlugin implements FlutterPlugin, MethodCallHandler,
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-        parse(call, result);
+        try {
+            String managerName = call.argument("ManagerName");
+            // CommonUtil.runMainThread(()->{
+            //     channel.invokeMethod("testInvoke", managerName+"."+call.method);
+            // });
+            Field field = FlutterOpenimSdkPlugin.class.getDeclaredField(managerName);
+            Method method = field.get(new Object()).getClass().getDeclaredMethod(call.method, MethodCall.class, Result.class);
+            Log.i("F-OpenIMSDK(flutter call native)", "{ class:" + managerName + ",  method:" + method.getName() + " }");
+            method.invoke(field.get(new Object()), call, result);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        Log.i("F-OpenIMSDK", "onDetachedFromEngine");
         FlutterOpenimSdkPlugin.channel.setMethodCallHandler(null);
         connectivityListener.unregisterReceiver();
     }
@@ -100,17 +115,5 @@ public class FlutterOpenimSdkPlugin implements FlutterPlugin, MethodCallHandler,
     public void onDetachedFromActivity() {
         visibilityListener.unregisterReceiver(activity);
         activity = null;
-    }
-
-    void parse(@NonNull MethodCall call, @NonNull Result result) {
-        try {
-            String managerName = call.argument("ManagerName");
-            Field field = FlutterOpenimSdkPlugin.class.getDeclaredField(managerName);
-            Method method = field.get(new Object()).getClass().getDeclaredMethod(call.method, MethodCall.class, Result.class);
-            Log.i("F-OpenIMSDK(flutter call native)", "{ class:" + managerName + ",  method:" + method.getName() + " }");
-            method.invoke(field.get(new Object()), call, result);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
