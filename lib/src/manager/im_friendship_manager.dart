@@ -3,7 +3,7 @@ import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 
 class FriendshipManager {
   final MethodChannel _channel;
-  late OnFriendshipListener listener;
+  OnFriendshipListener? listener;
 
   FriendshipManager(this._channel);
 

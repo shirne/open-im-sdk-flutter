@@ -3,7 +3,7 @@ import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 
 class UserManager {
   final MethodChannel _channel;
-  late OnUserListener listener;
+  OnUserListener? listener;
 
   UserManager(this._channel);
 

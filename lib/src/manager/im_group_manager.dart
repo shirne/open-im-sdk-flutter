@@ -5,7 +5,7 @@ import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 
 class GroupManager {
   final MethodChannel _channel;
-  late OnGroupListener listener;
+  OnGroupListener? listener;
 
   GroupManager(this._channel);
 

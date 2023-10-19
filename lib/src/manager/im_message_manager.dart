@@ -6,7 +6,7 @@ class MessageManager {
 
   // List<AdvancedMsgListener> advancedMsgListeners = List.empty(growable: true);
   OnMsgSendProgressListener? msgSendProgressListener;
-  late OnAdvancedMsgListener msgListener;
+  OnAdvancedMsgListener? msgListener;
   OnCustomBusinessListener? customBusinessListener;
   OnMessageKvInfoListener? messageKvInfoListener;
 
