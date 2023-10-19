@@ -7,11 +7,11 @@ import 'package:flutter_openim_sdk/src/logger.dart';
 
 class IMManager {
   final MethodChannel _channel;
-  late ConversationManager conversationManager;
-  late FriendshipManager friendshipManager;
-  late MessageManager messageManager;
-  late GroupManager groupManager;
-  late UserManager userManager;
+  final ConversationManager conversationManager;
+  final FriendshipManager friendshipManager;
+  final MessageManager messageManager;
+  final GroupManager groupManager;
+  final UserManager userManager;
 
   late OnConnectListener _connectListener;
   OnListenerForService? _listenerForService;
@@ -21,12 +21,12 @@ class IMManager {
   bool isLogined = false;
   String? token;
 
-  IMManager(this._channel) {
-    conversationManager = ConversationManager(_channel);
-    friendshipManager = FriendshipManager(_channel);
-    messageManager = MessageManager(_channel);
-    groupManager = GroupManager(_channel);
-    userManager = UserManager(_channel);
+  IMManager(this._channel)
+      : conversationManager = ConversationManager(_channel),
+        friendshipManager = FriendshipManager(_channel),
+        messageManager = MessageManager(_channel),
+        groupManager = GroupManager(_channel),
+        userManager = UserManager(_channel) {
     _addNativeCallback(_channel);
   }
 
