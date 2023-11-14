@@ -489,7 +489,7 @@ class GroupManager {
               'count': count,
               'joinTimeBegin': joinTimeBegin,
               'joinTimeEnd': joinTimeEnd,
-              'excludeUserIDList': excludeUserIDList,
+              'excludeUserIDList': filterUserIDList,
               'operationID': Utils.checkOperationID(operationID),
             }),
           )
