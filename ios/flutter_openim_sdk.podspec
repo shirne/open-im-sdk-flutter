@@ -19,7 +19,7 @@ A new Flutter project.
 
   # s.dependency 'OpenIMSDKCore','3.4.0'
   s.static_framework = true
-  s.ios.vendored_frameworks = 'Frameworks/OpenIMCore.xcframework'
+  # s.ios.vendored_frameworks = 'Frameworks/OpenIMCore.xcframework'
   s.vendored_frameworks = 'OpenIMCore.xcframework'
   s.dependency 'OpenIMCore','0.0.1'
   # Flutter.framework does not contain a i386 slice.
