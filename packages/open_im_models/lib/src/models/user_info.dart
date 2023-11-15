@@ -47,18 +47,16 @@ class UserInfo {
     appMangerLevel = json['appMangerLevel'];
   }
 
-  Map<String, dynamic> toJson() {
-    final data = Map<String, dynamic>();
-    data['appMangerLevel'] = this.appMangerLevel;
-    data['userID'] = this.userID;
-    data['nickname'] = this.nickname;
-    data['faceURL'] = this.faceURL;
-    data['ex'] = this.ex;
-    data['createTime'] = this.createTime;
-    data['remark'] = this.remark;
-    data['globalRecvMsgOpt'] = this.globalRecvMsgOpt;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        'appMangerLevel': appMangerLevel,
+        'userID': userID,
+        'nickname': nickname,
+        'faceURL': faceURL,
+        'ex': ex,
+        'createTime': createTime,
+        'remark': remark,
+        'globalRecvMsgOpt': globalRecvMsgOpt,
+      };
 
   String getShowName() => _isNull(remark) ?? _isNull(nickname) ?? userID!;
 
@@ -100,30 +98,33 @@ class FullUserInfo {
         : null;
   }
 
-  Map<String, dynamic> toJson() {
-    final data = Map<String, dynamic>();
-    data['publicInfo'] = this.publicInfo?.toJson();
-    data['friendInfo'] = this.friendInfo?.toJson();
-    data['blackInfo'] = this.blackInfo?.toJson();
-
-    return data;
-  }
-
   String get userID {
     return publicInfo?.userID ?? friendInfo?.userID ?? blackInfo?.userID ?? '';
   }
 
   String get nickname {
-    return publicInfo?.nickname ?? friendInfo?.nickname ?? blackInfo?.nickname ?? '';
+    return publicInfo?.nickname ??
+        friendInfo?.nickname ??
+        blackInfo?.nickname ??
+        '';
   }
 
   String get faceURL {
-    return publicInfo?.faceURL ?? friendInfo?.faceURL ?? blackInfo?.faceURL ?? '';
+    return publicInfo?.faceURL ??
+        friendInfo?.faceURL ??
+        blackInfo?.faceURL ??
+        '';
   }
 
   String get showName {
     return friendInfo?.nickname ?? nickname;
   }
+
+  Map<String, dynamic> toJson() => {
+        'publicInfo': publicInfo?.toJson(),
+        'friendInfo': friendInfo?.toJson(),
+        'blackInfo': blackInfo?.toJson(),
+      };
 }
 
 class PublicUserInfo {
@@ -160,15 +161,13 @@ class PublicUserInfo {
     ex = json['ex'];
   }
 
-  Map<String, dynamic> toJson() {
-    final data = Map<String, dynamic>();
-    data['userID'] = this.userID;
-    data['nickname'] = this.nickname;
-    data['faceURL'] = this.faceURL;
-    data['appMangerLevel'] = this.appManagerLevel;
-    data['ex'] = this.ex;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        'userID': userID,
+        'nickname': nickname,
+        'faceURL': faceURL,
+        'appMangerLevel': appManagerLevel,
+        'ex': ex,
+      };
 }
 
 class FriendInfo {
@@ -228,20 +227,18 @@ class FriendInfo {
     ex = json['ex'];
   }
 
-  Map<String, dynamic> toJson() {
-    final data = Map<String, dynamic>();
-    data['ownerUserID'] = this.ownerUserID;
-    data['userID'] = this.userID;
-    data['remark'] = this.remark;
-    data['createTime'] = this.createTime;
-    data['addSource'] = this.addSource;
-    data['operatorUserID'] = this.operatorUserID;
-    data['nickname'] = this.nickname;
-    data['faceURL'] = this.faceURL;
-    data['friendUserID'] = this.friendUserID;
-    data['ex'] = this.ex;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        'ownerUserID': ownerUserID,
+        'userID': userID,
+        'remark': remark,
+        'createTime': createTime,
+        'addSource': addSource,
+        'operatorUserID': operatorUserID,
+        'nickname': nickname,
+        'faceURL': faceURL,
+        'friendUserID': friendUserID,
+        'ex': ex,
+      };
 
   String getShowName() => _isNull(remark) ?? _isNull(nickname) ?? userID!;
 
@@ -308,20 +305,18 @@ class BlacklistInfo {
     ex = json['ex'];
   }
 
-  Map<String, dynamic> toJson() {
-    final data = Map<String, dynamic>();
-    data['ownerUserID'] = this.ownerUserID;
-    data['blockUserID'] = this.blockUserID;
-    data['userID'] = this.userID;
-    data['nickname'] = this.nickname;
-    data['faceURL'] = this.faceURL;
-    data['gender'] = this.gender;
-    data['createTime'] = this.createTime;
-    data['addSource'] = this.addSource;
-    data['operatorUserID'] = this.operatorUserID;
-    data['ex'] = this.ex;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        'ownerUserID': ownerUserID,
+        'blockUserID': blockUserID,
+        'userID': userID,
+        'nickname': nickname,
+        'faceURL': faceURL,
+        'gender': gender,
+        'createTime': createTime,
+        'addSource': addSource,
+        'operatorUserID': operatorUserID,
+        'ex': ex,
+      };
 }
 
 class FriendshipInfo {
@@ -417,23 +412,21 @@ class FriendApplicationInfo {
     ex = json['ex'];
   }
 
-  Map<String, dynamic> toJson() {
-    final data = Map<String, dynamic>();
-    data['fromUserID'] = this.fromUserID;
-    data['fromNickname'] = this.fromNickname;
-    data['fromFaceURL'] = this.fromFaceURL;
-    data['toUserID'] = this.toUserID;
-    data['toNickname'] = this.toNickname;
-    data['toFaceURL'] = this.toFaceURL;
-    data['handleResult'] = this.handleResult;
-    data['reqMsg'] = this.reqMsg;
-    data['createTime'] = this.createTime;
-    data['handlerUserID'] = this.handlerUserID;
-    data['handleMsg'] = this.handleMsg;
-    data['handleTime'] = this.handleTime;
-    data['ex'] = this.ex;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        'fromUserID': fromUserID,
+        'fromNickname': fromNickname,
+        'fromFaceURL': fromFaceURL,
+        'toUserID': toUserID,
+        'toNickname': toNickname,
+        'toFaceURL': toFaceURL,
+        'handleResult': handleResult,
+        'reqMsg': reqMsg,
+        'createTime': createTime,
+        'handlerUserID': handlerUserID,
+        'handleMsg': handleMsg,
+        'handleTime': handleTime,
+        'ex': ex,
+      };
 
   /// Waiting to be processed
   bool get isWaitingHandle => handleResult == 0;

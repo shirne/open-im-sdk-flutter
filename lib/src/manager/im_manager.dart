@@ -400,10 +400,8 @@ class IMManager {
     OnConnectListener listener, {
     String? operationID,
   }) {
-    this._connectListener = listener;
-    if (config.logFilePath == null) {
-      config.logFilePath = config.dataDir;
-    }
+    _connectListener = listener;
+    config.logFilePath ??= config.dataDir;
     return _channel.invokeMethod(
       'initSDK',
       _buildParam(

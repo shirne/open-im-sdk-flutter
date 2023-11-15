@@ -199,22 +199,20 @@ class GroupMembersInfo {
     inviterUserID = json['inviterUserID'];
   }
 
-  Map<String, dynamic> toJson() {
-    final data = Map<String, dynamic>();
-    data['groupID'] = this.groupID;
-    data['userID'] = this.userID;
-    data['roleLevel'] = this.roleLevel;
-    data['joinTime'] = this.joinTime;
-    data['nickname'] = this.nickname;
-    data['faceURL'] = this.faceURL;
-    data['ex'] = this.ex;
-    data['joinSource'] = this.joinSource;
-    data['operatorUserID'] = this.operatorUserID;
-    data['muteEndTime'] = this.muteEndTime;
-    data['appManagerLevel'] = this.appManagerLevel;
-    data['inviterUserID'] = this.inviterUserID;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        'groupID': groupID,
+        'userID': userID,
+        'roleLevel': roleLevel,
+        'joinTime': joinTime,
+        'nickname': nickname,
+        'faceURL': faceURL,
+        'ex': ex,
+        'joinSource': joinSource,
+        'operatorUserID': operatorUserID,
+        'muteEndTime': muteEndTime,
+        'appManagerLevel': appManagerLevel,
+        'inviterUserID': inviterUserID,
+      };
 
   @override
   bool operator ==(Object other) =>

@@ -240,50 +240,48 @@ class Message {
         : null;
   }
 
-  Map<String, dynamic> toJson() {
-    final data = Map<String, dynamic>();
-    data['clientMsgID'] = this.clientMsgID;
-    data['serverMsgID'] = this.serverMsgID;
-    data['createTime'] = this.createTime;
-    data['sendTime'] = this.sendTime;
-    data['sendID'] = this.sendID;
-    data['recvID'] = this.recvID;
-    data['msgFrom'] = this.msgFrom;
-    data['contentType'] = this.contentType;
-    data['senderPlatformID'] = this.senderPlatformID;
-    data['senderNickname'] = this.senderNickname;
-    data['senderFaceUrl'] = this.senderFaceUrl;
-    data['groupID'] = this.groupID;
-    data['localEx'] = this.localEx;
-    data['seq'] = this.seq;
-    data['isRead'] = this.isRead;
-    data['hasReadTime'] = this.hasReadTime;
-    data['status'] = this.status;
-    data['offlinePush'] = this.offlinePush?.toJson();
-    data['attachedInfo'] = this.attachedInfo;
-    data['ex'] = this.ex;
-    data['exMap'] = this.exMap;
-    data['sessionType'] = this.sessionType;
-    data['pictureElem'] = this.pictureElem?.toJson();
-    data['soundElem'] = this.soundElem?.toJson();
-    data['videoElem'] = this.videoElem?.toJson();
-    data['fileElem'] = this.fileElem?.toJson();
-    data['atTextElem'] = this.atTextElem?.toJson();
-    data['locationElem'] = this.locationElem?.toJson();
-    data['customElem'] = this.customElem?.toJson();
-    data['quoteElem'] = this.quoteElem?.toJson();
-    data['mergeElem'] = this.mergeElem?.toJson();
-    data['notificationElem'] = this.notificationElem?.toJson();
-    data['faceElem'] = this.faceElem?.toJson();
-    data['attachedInfoElem'] = this.attachedInfoElem?.toJson();
-    data['isExternalExtensions'] = this.isExternalExtensions;
-    data['isReact'] = this.isReact;
-    data['textElem'] = this.textElem?.toJson();
-    data['cardElem'] = this.cardElem?.toJson();
-    data['advancedTextElem'] = this.advancedTextElem?.toJson();
-    data['typingElem'] = this.typingElem?.toJson();
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        'clientMsgID': clientMsgID,
+        'serverMsgID': serverMsgID,
+        'createTime': createTime,
+        'sendTime': sendTime,
+        'sendID': sendID,
+        'recvID': recvID,
+        'msgFrom': msgFrom,
+        'contentType': contentType,
+        'senderPlatformID': senderPlatformID,
+        'senderNickname': senderNickname,
+        'senderFaceUrl': senderFaceUrl,
+        'groupID': groupID,
+        'localEx': localEx,
+        'seq': seq,
+        'isRead': isRead,
+        'hasReadTime': hasReadTime,
+        'status': status,
+        'offlinePush': offlinePush?.toJson(),
+        'attachedInfo': attachedInfo,
+        'ex': ex,
+        'exMap': exMap,
+        'sessionType': sessionType,
+        'pictureElem': pictureElem?.toJson(),
+        'soundElem': soundElem?.toJson(),
+        'videoElem': videoElem?.toJson(),
+        'fileElem': fileElem?.toJson(),
+        'atTextElem': atTextElem?.toJson(),
+        'locationElem': locationElem?.toJson(),
+        'customElem': customElem?.toJson(),
+        'quoteElem': quoteElem?.toJson(),
+        'mergeElem': mergeElem?.toJson(),
+        'notificationElem': notificationElem?.toJson(),
+        'faceElem': faceElem?.toJson(),
+        'attachedInfoElem': attachedInfoElem?.toJson(),
+        'isExternalExtensions': isExternalExtensions,
+        'isReact': isReact,
+        'textElem': textElem?.toJson(),
+        'cardElem': cardElem?.toJson(),
+        'advancedTextElem': advancedTextElem?.toJson(),
+        'typingElem': typingElem?.toJson(),
+      };
 
   @override
   bool operator ==(Object other) =>
@@ -368,13 +366,13 @@ class PictureElem {
   PictureElem.fromJson(Map<String, dynamic> json) {
     sourcePath = json['sourcePath'];
     sourcePicture = json['sourcePicture'] != null
-        ? new PictureInfo.fromJson(json['sourcePicture'])
+        ? PictureInfo.fromJson(json['sourcePicture'])
         : null;
     bigPicture = json['bigPicture'] != null
-        ? new PictureInfo.fromJson(json['bigPicture'])
+        ? PictureInfo.fromJson(json['bigPicture'])
         : null;
     snapshotPicture = json['snapshotPicture'] != null
-        ? new PictureInfo.fromJson(json['snapshotPicture'])
+        ? PictureInfo.fromJson(json['snapshotPicture'])
         : null;
   }
 
