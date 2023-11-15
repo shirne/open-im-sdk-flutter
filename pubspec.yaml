@@ -11,6 +11,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  open_im_models: 
+    git:
+      url: git@github.com:shirne/open-im-sdk-flutter.git
+      ref: improve-v3.4
+      path: packages/open_im_models
 
 dev_dependencies:
   flutter_test:

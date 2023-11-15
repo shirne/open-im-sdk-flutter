@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
+import '../enum/conversation_type.dart';
+import 'message.dart';
 
 class ConversationInfo {
   // Unique identifier for the conversation

@@ -1,4 +1,5 @@
-import '../../flutter_openim_sdk.dart';
+import 'group_info.dart';
+import 'message.dart';
 
 /// OA notification
 class OANotification {

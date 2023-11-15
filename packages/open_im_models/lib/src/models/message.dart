@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
+import '../enum/conversation_type.dart';
 
 class Message {
   /// Message ID, a unique identifier.
