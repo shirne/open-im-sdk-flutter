@@ -212,7 +212,7 @@ class GroupManager {
           _buildParam({
             'groupInfo': groupInfo.toJson(),
             'operationID': Utils.checkOperationID(operationID),
-          }));
+          }),);
 
   /// Query group information
   Future<List<GroupInfo>> getGroupsInfo({
@@ -643,11 +643,12 @@ class GroupManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setGroupMemberInfo',
-          _buildParam({
-            'info': groupMembersInfo.toJson(),
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'setGroupMemberInfo',
+        _buildParam({
+          'info': groupMembersInfo.toJson(),
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
   static Map _buildParam(Map param) {
     param["ManagerName"] = "groupManager";
     log('param: $param');

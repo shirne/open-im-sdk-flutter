@@ -56,15 +56,16 @@ class UserManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'setSelfInfo',
-          _buildParam({
-            // 'userID': userID,
-            'nickname': nickname,
-            'faceURL': faceURL,
-            'appManagerLevel': appManagerLevel,
-            'ex': ex,
-            'operationID': Utils.checkOperationID(operationID),
-          }));
+        'setSelfInfo',
+        _buildParam({
+          // 'userID': userID,
+          'nickname': nickname,
+          'faceURL': faceURL,
+          'appManagerLevel': appManagerLevel,
+          'ex': ex,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   Future<List<UserStatusInfo>> subscribeUsersStatus(
     List<String> userIDs, {
@@ -88,11 +89,12 @@ class UserManager {
     String? operationID,
   }) {
     return _channel.invokeMethod(
-        'unsubscribeUsersStatus',
-        _buildParam({
-          'userIDs': userIDs,
-          'operationID': Utils.checkOperationID(operationID),
-        }));
+      'unsubscribeUsersStatus',
+      _buildParam({
+        'userIDs': userIDs,
+        'operationID': Utils.checkOperationID(operationID),
+      }),
+    );
   }
 
   Future<List<UserStatusInfo>> getSubscribeUsersStatus({
@@ -134,12 +136,13 @@ class UserManager {
   }) {
     return _channel
         .invokeMethod(
-            'getUsersInfoWithCache',
-            _buildParam({
-              'userIDs': userIDs,
-              'groupID': groupID,
-              'operationID': Utils.checkOperationID(operationID),
-            }))
+          'getUsersInfoWithCache',
+          _buildParam({
+            'userIDs': userIDs,
+            'groupID': groupID,
+            'operationID': Utils.checkOperationID(operationID),
+          }),
+        )
         .then((value) =>
             Utils.toList(value, (map) => FullUserInfo.fromJson(map)));
   }

@@ -150,7 +150,7 @@ class ConversationManager {
           'hideAllConversations',
           _buildParam({
             "operationID": Utils.checkOperationID(operationID),
-          }));
+          }),);
 
   /// Query Conversation ID
   /// [sourceID] UserID for one-on-one, GroupID for group
@@ -166,7 +166,7 @@ class ConversationManager {
           'sourceID': sourceID,
           'sessionType': sessionType,
           'operationID': Utils.checkOperationID(operationID),
-        }));
+        }),);
   }
 
   /// get total unread message count

@@ -566,7 +566,7 @@ class IMManager {
             'fcmToken': fcmToken,
             'expireTime': expireTime,
             'operationID': Utils.checkOperationID(operationID),
-          }));
+          }),);
 
   void setUploadFileListener(OnUploadFileListener listener) {
     _uploadFileListener = listener;

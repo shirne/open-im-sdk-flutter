@@ -549,9 +549,9 @@ class MessageManager {
                   'count': count,
                 },
                 'operationID': Utils.checkOperationID(operationID),
-              }))
+              }),)
           .then((value) =>
-              Utils.toObj(value, (map) => SearchResult.fromJson(map)));
+              Utils.toObj(value, (map) => SearchResult.fromJson(map)),);
 
   /// Revoke a message
   /// [message] The message to be revoked
@@ -607,9 +607,9 @@ class MessageManager {
                 'count': count ?? 40,
                 'lastMinSeq': lastMinSeq ?? 0,
                 'operationID': Utils.checkOperationID(operationID),
-              }))
+              }),)
           .then((value) =>
-              Utils.toObj(value, (map) => AdvancedMessage.fromJson(map)));
+              Utils.toObj(value, (map) => AdvancedMessage.fromJson(map)),);
 
   /// Get chat history (newly received chat history after startMsg). Used for locating a specific message in global search and then fetching messages received after that message.
   /// [conversationID] Conversation ID, can be used for querying notifications
@@ -631,9 +631,9 @@ class MessageManager {
                 'count': count ?? 40,
                 'lastMinSeq': lastMinSeq ?? 0,
                 'operationID': Utils.checkOperationID(operationID),
-              }))
+              }),)
           .then((value) =>
-              Utils.toObj(value, (map) => AdvancedMessage.fromJson(map)));
+              Utils.toObj(value, (map) => AdvancedMessage.fromJson(map)),);
 
   /// Find message details
   /// [conversationID] Conversation ID
@@ -648,9 +648,9 @@ class MessageManager {
               _buildParam({
                 'searchParams': searchParams.map((e) => e.toJson()).toList(),
                 'operationID': Utils.checkOperationID(operationID),
-              }))
+              }),)
           .then((value) =>
-              Utils.toObj(value, (map) => SearchResult.fromJson(map)));
+              Utils.toObj(value, (map) => SearchResult.fromJson(map)),);
 
   /// Rich text message
   /// [text] Input content
