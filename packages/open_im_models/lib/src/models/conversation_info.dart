@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import '../enum/conversation_type.dart';
 import 'message.dart';
@@ -102,7 +103,9 @@ class ConversationInfo {
       } else if (json['latestMsg'] is Map) {
         latestMsg = Message.fromJson(json['latestMsg']);
       }
-    } catch (e) {}
+    } catch (e) {
+      log('** $e', name: 'flutter_openim_sdk', level: 1600);
+    }
     latestMsgSendTime = json['latestMsgSendTime'];
     draftText = json['draftText'];
     draftTextTime = json['draftTextTime'];

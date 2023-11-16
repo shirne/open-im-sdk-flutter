@@ -13,11 +13,11 @@ class IMManager {
   final GroupManager groupManager;
   final UserManager userManager;
 
-  late OnConnectListener _connectListener;
+  OnConnectListener? _connectListener;
   OnListenerForService? _listenerForService;
   OnUploadFileListener? _uploadFileListener;
-  late String userID;
-  late UserInfo userInfo;
+  String? userID;
+  UserInfo? userInfo;
   bool isLogined = false;
   String? token;
 
@@ -40,19 +40,19 @@ class IMManager {
             case 'onConnectFailed':
               int? errCode = call.arguments['errCode'];
               String? errMsg = call.arguments['errMsg'];
-              _connectListener.connectFailed(errCode, errMsg);
+              _connectListener?.connectFailed(errCode, errMsg);
               break;
             case 'onConnecting':
-              _connectListener.connecting();
+              _connectListener?.connecting();
               break;
             case 'onConnectSuccess':
-              _connectListener.connectSuccess();
+              _connectListener?.connectSuccess();
               break;
             case 'onKickedOffline':
-              _connectListener.kickedOffline();
+              _connectListener?.kickedOffline();
               break;
             case 'onUserTokenExpired':
-              _connectListener.userTokenExpired();
+              _connectListener?.userTokenExpired();
               break;
           }
         } else if (call.method == ListenerType.userListener) {
@@ -61,7 +61,7 @@ class IMManager {
           switch (type) {
             case 'onSelfInfoUpdated':
               userInfo = Utils.toObj(data, (map) => UserInfo.fromJson(map));
-              userManager.listener?.selfInfoUpdated(userInfo);
+              userManager.listener?.selfInfoUpdated(userInfo!);
               break;
             case 'onUserStatusChanged':
               final status =
@@ -527,10 +527,10 @@ class IMManager {
       );
 
   /// Get the current logged-in user ID
-  Future<String> getLoginUserID() async => userID;
+  Future<String> getLoginUserID() async => userID ?? '';
 
   /// Get the current logged-in user information
-  Future<UserInfo> getLoginUserInfo() async => userInfo;
+  Future<UserInfo> getLoginUserInfo() async => userInfo ?? UserInfo.empty;
 
   /// [id] Same as [OnUploadFileListener] ID, to distinguish which file callback it is
   Future uploadFile({
@@ -561,12 +561,13 @@ class IMManager {
     String? operationID,
   }) =>
       _channel.invokeMethod(
-          'updateFcmToken',
-          _buildParam({
-            'fcmToken': fcmToken,
-            'expireTime': expireTime,
-            'operationID': Utils.checkOperationID(operationID),
-          }),);
+        'updateFcmToken',
+        _buildParam({
+          'fcmToken': fcmToken,
+          'expireTime': expireTime,
+          'operationID': Utils.checkOperationID(operationID),
+        }),
+      );
 
   void setUploadFileListener(OnUploadFileListener listener) {
     _uploadFileListener = listener;

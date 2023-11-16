@@ -1,4 +1,6 @@
 class UserInfo {
+  static final empty = UserInfo(userID: '', nickname: '', faceURL: '');
+
   /// User ID
   String? userID;
 
