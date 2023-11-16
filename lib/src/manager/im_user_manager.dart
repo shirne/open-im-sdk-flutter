@@ -28,7 +28,8 @@ class UserManager {
             }),
           )
           .then(
-              (value) => Utils.toList(value, (v) => FullUserInfo.fromJson(v)));
+            (value) => Utils.toList(value, (v) => FullUserInfo.fromJson(v)),
+          );
 
   /// Get information of the currently logged-in user
   Future<UserInfo> getSelfUserInfo({
@@ -143,8 +144,9 @@ class UserManager {
             'operationID': Utils.checkOperationID(operationID),
           }),
         )
-        .then((value) =>
-            Utils.toList(value, (map) => FullUserInfo.fromJson(map)));
+        .then(
+          (value) => Utils.toList(value, (map) => FullUserInfo.fromJson(map)),
+        );
   }
 
   static Map _buildParam(Map param) {

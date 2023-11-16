@@ -1,7 +1,7 @@
 /// Support for doing something awesome.
 ///
 /// More dartdocs go here.
-library;
+library open_im_models;
 
 export 'src/enum/conversation_type.dart';
 export 'src/enum/group_at_type.dart';
