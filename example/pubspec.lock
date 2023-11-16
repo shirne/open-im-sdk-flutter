@@ -114,6 +114,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.9.1"
+  open_im_models:
+    dependency: transitive
+    description:
+      path: "packages/open_im_models"
+      ref: "improve-v3.4"
+      resolved-ref: c51e3af34b631277b5ee73dcff01fdd8730b983a
+      url: "git@github.com:shirne/open-im-sdk-flutter.git"
+    source: git
+    version: "1.0.0"
   path:
     dependency: transitive
     description:
@@ -192,5 +201,5 @@ packages:
     source: hosted
     version: "0.1.4-beta"
 sdks:
-  dart: ">=3.1.0-185.0.dev <4.0.0"
+  dart: ">=3.1.5 <4.0.0"
   flutter: ">=1.20.0"
